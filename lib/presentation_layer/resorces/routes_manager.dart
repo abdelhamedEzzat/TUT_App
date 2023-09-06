@@ -2,6 +2,7 @@ import 'package:clean_arcicalcutre/presentation_layer/forget_password_view/forge
 import 'package:clean_arcicalcutre/presentation_layer/login_view/login_view.dart';
 import 'package:clean_arcicalcutre/presentation_layer/main_view/main_view.dart';
 import 'package:clean_arcicalcutre/presentation_layer/register_view/register_view.dart';
+import 'package:clean_arcicalcutre/presentation_layer/resorces/strings_manger.dart';
 import 'package:clean_arcicalcutre/presentation_layer/splash_view/splash_view.dart';
 import 'package:clean_arcicalcutre/presentation_layer/store_details/store_details.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +40,9 @@ class GenerateRoute {
     return MaterialPageRoute(
         builder: (_) => Scaffold(
               appBar: AppBar(
-                title: const Text("no route Defined"),
+                title: const Text(AppStrings.noRouteFound),
               ),
-              body: const Text("no route Defined"),
+              body: const Text(AppStrings.noRouteFound),
             ));
   }
 }

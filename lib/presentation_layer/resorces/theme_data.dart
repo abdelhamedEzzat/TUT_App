@@ -28,7 +28,7 @@ ThemeData getApplicationTheme() {
             getRegularStyle(color: ColorManager.white, fontSize: FontSize.s16)),
 //bottom theme
     buttonTheme: ButtonThemeData(
-      shape: StadiumBorder(),
+      shape: const StadiumBorder(),
       disabledColor: ColorManager.grey1,
       buttonColor: ColorManager.primary,
       splashColor: ColorManager.lightPrimary,

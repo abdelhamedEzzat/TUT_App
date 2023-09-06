@@ -2,9 +2,9 @@ import 'package:clean_arcicalcutre/presentation_layer/resorces/theme_data.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
-  MyApp._internal(); // Named Constractor
+  const MyApp._internal(); // Named Constractor
 
-  static final MyApp _instance = MyApp._internal(); //SINGLE INSTATNCE
+  static const MyApp _instance = MyApp._internal(); //SINGLE INSTATNCE
 
   factory MyApp() => _instance; //Factory Constractor
 
