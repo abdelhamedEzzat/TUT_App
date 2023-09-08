@@ -1,5 +1,7 @@
 import 'package:clean_arcicalcutre/presentation_layer/resorces/assets_manger.dart';
 import 'package:clean_arcicalcutre/presentation_layer/resorces/color_manger.dart';
+import 'package:clean_arcicalcutre/presentation_layer/resorces/constant_manager.dart';
+import 'package:clean_arcicalcutre/presentation_layer/resorces/routes_manager.dart';
 import 'package:clean_arcicalcutre/presentation_layer/resorces/strings_manger.dart';
 import 'package:clean_arcicalcutre/presentation_layer/resorces/values_manger.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
+        backgroundColor: ColorManager.white,
+        elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: ColorManager.white,
             statusBarBrightness: Brightness.dark),
@@ -60,17 +64,19 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       ),
       bottomSheet: Container(
         color: ColorManager.white,
-        height: AppSize.s100,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed(Routes.loginView);
+                },
                 child: Text(
                   AppStrings.skip,
                   textAlign: TextAlign.end,
-                  style: TextStyle(color: ColorManager.primary),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             ),
@@ -82,42 +88,57 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 
   Widget _getBottomSheetWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        //left arrow
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p14),
-          child: GestureDetector(
-              child: SizedBox(
-            height: AppSize.s20,
-            width: AppSize.s20,
-            child: SvgPicture.asset(ImageAssets.leftArrowIcons),
-          )),
-        ),
+    return Container(
+      color: ColorManager.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          //left arrow
+          Padding(
+            padding: const EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+                onTap: () {
+                  _pageController.animateToPage(_getPreviousIndex(),
+                      duration:
+                          Duration(microseconds: ConstantApp.breviousIconDelay),
+                      curve: Curves.bounceInOut);
+                },
+                child: SizedBox(
+                  height: AppSize.s20,
+                  width: AppSize.s20,
+                  child: SvgPicture.asset(ImageAssets.leftArrowIcons),
+                )),
+          ),
 
-        // circler indecator
-        Row(
-          children: [
-            for (int i = 0; i < _splashScreenList.length; i++)
-              Padding(
-                padding: const EdgeInsets.all(AppPadding.p8),
-                child: _getProberCircle(i),
-              )
-          ],
-        ),
+          // circler indecator
+          Row(
+            children: [
+              for (int i = 0; i < _splashScreenList.length; i++)
+                Padding(
+                  padding: const EdgeInsets.all(AppPadding.p8),
+                  child: _getProberCircle(i),
+                )
+            ],
+          ),
 
-        //Right arrow
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p14),
-          child: GestureDetector(
-              child: SizedBox(
-            height: AppSize.s20,
-            width: AppSize.s20,
-            child: SvgPicture.asset(ImageAssets.rightArrowIcons),
-          )),
-        ),
-      ],
+          //Right arrow
+          Padding(
+            padding: const EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+                onTap: () {
+                  _pageController.animateToPage(_getNextIndex(),
+                      duration:
+                          Duration(microseconds: ConstantApp.breviousIconDelay),
+                      curve: Curves.bounceInOut);
+                },
+                child: SizedBox(
+                  height: AppSize.s20,
+                  width: AppSize.s20,
+                  child: SvgPicture.asset(ImageAssets.rightArrowIcons),
+                )),
+          ),
+        ],
+      ),
     );
   }
 
@@ -127,6 +148,22 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     } else {
       return SvgPicture.asset(ImageAssets.solidCircleIcon);
     }
+  }
+
+  int _getPreviousIndex() {
+    int previousIndex = --_currentIndex;
+    if (previousIndex == -1) {
+      previousIndex = _splashScreenList.length;
+    }
+    return previousIndex;
+  }
+
+  int _getNextIndex() {
+    int nextIndex = ++_currentIndex;
+    if (nextIndex == _splashScreenList.length) {
+      nextIndex = 0;
+    }
+    return nextIndex;
   }
 }
 

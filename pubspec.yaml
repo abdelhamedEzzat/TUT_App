@@ -66,10 +66,10 @@ flutter:
     - assets/images/onBoardingLogo2.svg
     - assets/images/onBoardingLogo3.svg
     - assets/images/onBoardingLogo4.svg
-    - assets/icons/embty_circle_icon.svg
-    - assets/icons/solid_circle_icon.svg
-    - assets/icons/Right_Arrow_Icons.svg
-    - assets/icons/Left_arrow_icons.svg
+    - assets/images/icons/embty_circle_icon.svg
+    - assets/images/icons/solid_circle_icon.svg
+    - assets/images/icons/Right_Arrow_Icons.svg
+    - assets/images/icons/Left_arrow_icons.svg
    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
