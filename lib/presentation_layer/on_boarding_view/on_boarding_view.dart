@@ -4,6 +4,7 @@ import 'package:clean_arcicalcutre/presentation_layer/resorces/strings_manger.da
 import 'package:clean_arcicalcutre/presentation_layer/resorces/values_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({super.key});
@@ -13,7 +14,7 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   int _currentIndex = 0;
   late final List<SliderObject> _splashScreenList = _getSliserData();
@@ -39,24 +40,93 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: ColorManager.white,
-        appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: ColorManager.white,
-              statusBarBrightness: Brightness.dark),
+      backgroundColor: ColorManager.white,
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: ColorManager.white,
+            statusBarBrightness: Brightness.dark),
+      ),
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: _splashScreenList.length,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        itemBuilder: (context, index) {
+          return OnBoardingPage(_splashScreenList[index]);
+        },
+      ),
+      bottomSheet: Container(
+        color: ColorManager.white,
+        height: AppSize.s100,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  AppStrings.skip,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(color: ColorManager.primary),
+                ),
+              ),
+            ),
+            _getBottomSheetWidget(),
+          ],
         ),
-        body: PageView.builder(
-          itemBuilder: (context, index) {
-            // ON PORDIING PAGE
-          },
-          controller: _pageController,
-          itemCount: _splashScreenList.length,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-        ));
+      ),
+    );
+  }
+
+  Widget _getBottomSheetWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        //left arrow
+        Padding(
+          padding: const EdgeInsets.all(AppPadding.p14),
+          child: GestureDetector(
+              child: SizedBox(
+            height: AppSize.s20,
+            width: AppSize.s20,
+            child: SvgPicture.asset(ImageAssets.leftArrowIcons),
+          )),
+        ),
+
+        // circler indecator
+        Row(
+          children: [
+            for (int i = 0; i < _splashScreenList.length; i++)
+              Padding(
+                padding: const EdgeInsets.all(AppPadding.p8),
+                child: _getProberCircle(i),
+              )
+          ],
+        ),
+
+        //Right arrow
+        Padding(
+          padding: const EdgeInsets.all(AppPadding.p14),
+          child: GestureDetector(
+              child: SizedBox(
+            height: AppSize.s20,
+            width: AppSize.s20,
+            child: SvgPicture.asset(ImageAssets.rightArrowIcons),
+          )),
+        ),
+      ],
+    );
+  }
+
+  Widget _getProberCircle(int index) {
+    if (index == _currentIndex) {
+      return SvgPicture.asset(ImageAssets.embtyCircleIcon);
+    } else {
+      return SvgPicture.asset(ImageAssets.solidCircleIcon);
+    }
   }
 }
 
@@ -92,6 +162,7 @@ class OnBoardingPage extends StatelessWidget {
         const SizedBox(
           height: AppSize.s60,
         ),
+        SvgPicture.asset(_sliderObject.image)
       ],
     );
   }
